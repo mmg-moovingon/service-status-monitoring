@@ -2,7 +2,7 @@
 
 # Define the output file for custom metrics
 METRICS_FILE="/var/lib/node_exporter/textfile_collector/services_status.prom"
-SERVICES_FILE="./services_list.txt"
+SERVICES_FILE="/opt/service-status-monitoring/services_list.txt"
 
 # Initialize the metrics file
 echo "# HELP service_status Status of various services (1=active running, 2=active exited, 3=inactive dead, 4=failed, 0=no match)" > "$METRICS_FILE"
