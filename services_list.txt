@@ -1,5 +1,5 @@
 nginx.service
 snmpd.service
 ssh.service
-rtb-server.service
+logic.service
 td-agent.service
