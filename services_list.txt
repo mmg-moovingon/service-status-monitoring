@@ -1,4 +1,2 @@
-nginx.service
 snmpd.service
 ssh.service
-td-agent.service
