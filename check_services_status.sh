@@ -1,14 +1,11 @@
 #!/bin/bash
 
-# Define the output file for custom metrics
-METRICS_FILE="/var/lib/node_exporter/textfile_collector/services_status.prom"
-SERVICES_FILE="/opt/service-status-monitoring/services_list.txt"
-
-# Initialize the metrics file
-echo "# HELP service_status Status of various services (1=active running, 2=active exited, 3=inactive dead, 4=failed, 0=no match)" > "$METRICS_FILE"
-echo "# TYPE service_status gauge" >> "$METRICS_FILE"
+# Initialize the metrics output
+echo "# HELP service_status Status of various services (1=active running, 2=active exited, 3=inactive dead, 4=failed, 0=no match)"
+echo "# TYPE service_status gauge"
 
 # Read each service from the services file
+SERVICES_FILE="/opt/service-status-monitoring/services_list.txt"
 while IFS= read -r SERVICE_NAME; do
     if [ -n "$SERVICE_NAME" ]; then
         # Get the status of the service
@@ -34,9 +31,9 @@ while IFS= read -r SERVICE_NAME; do
         esac
 
         # Format the service name to be Prometheus-compatible (replace dots with underscores)
-        PROMETHEUS_SERVICE_NAME=$(echo "$SERVICE_NAME" | sed 's/\./_/g')
+        PROMETHEUS_SERVICE_NAME=$(echo "$SERVICE_NAME" | sed "s/\./_/g")
 
-        # Write the custom metric to the metrics file
-        echo "service_status{service=\"$PROMETHEUS_SERVICE_NAME\"} $METRIC_VALUE" >> "$METRICS_FILE"
+        # Write the custom metric to stdout
+        echo "service_status{service=\"$PROMETHEUS_SERVICE_NAME\"} $METRIC_VALUE"
     fi
 done < "$SERVICES_FILE"
